@@ -1,0 +1,29 @@
+Screen:
+    BoxLayout:
+        orientation: 'vertical'
+        MDToolbar:
+            title: 'INSPECTOR'
+            elevation:5
+
+        MDTextField:
+            id: barcode
+            hint_text: "Scan"
+            mode: "rectangle"
+            icon_right:'barcode-scan'
+            focus: True
+            padding_top:
+            size_hint_x: None
+            size_hint_y: None
+            pos_hint: {'center_x':0.5,'center_y':0.6}
+            width: 400
+            required: True
+            helper_text_mode: "on_error"
+            helper_text: "Enter text"
+            on_text: app.on_enter
+
+        GridLayout:
+            padding:50
+            cols:1
+            ScrollView:
+                MDList:
+                    id: contaniner

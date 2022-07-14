@@ -1,0 +1,232 @@
+#: import get_color_from_hex kivy.utils.get_color_from_hex
+#: import XCamera kivy.garden.xcamera.XCamera
+
+<ImageTitleScreen>:
+    AsyncImage:
+        source:
+    MDLabel:
+        text: root.film_title
+        font_style: "H2"
+
+<MovieInfoBox>:
+    MDLabel:
+        text: "Release date: " + root.release_date
+        font_style: "H2"
+    MDLabel:
+        text: "Runtime: " + root.run_time
+        font_style: "H2"
+    MDLabel:
+        text: "Plot\n" + root.film_plot
+        font_style: "H2"
+    MDLabel:
+        text: "Awards: " + root.film_awards
+        font_style: "H2"
+    MDLabel:
+        text: "Directors: " + root.film_directors
+        font_style: "H2"
+    MDLabel:
+        text: "Writers: " + root.film_writers
+        font_style: "H2"
+    MDBoxLayout:
+        MDLabel:
+        text: "Actors"
+        font_style: "H2"
+        ScrollView:
+            MDBoxLayout:
+                id: actor_list
+    MDLabel:
+        text: "Genres: " + root.film_genres
+        font_style: "H2"
+    MDLabel:
+        text: "Companies: " + root.film_companies
+        font_style: "H2"
+    MDLabel:
+        text: "Countries: " + root.film_countries
+        font_style: "H2"
+    MDLabel:
+        text: "Languages: " + root.film_languages
+        font_style: "H2"
+    MDLabel:
+        text: "Content rating: " + root.film_content_rating
+        font_style: "H2"
+    MDLabel:
+        text: root.imdb + "/" + root.imdb_votes
+        font_style: "H2"
+    MDLabel:
+        text: root.metacritic
+        font_style: "H2"
+    MDLabel:
+        text: "Ratings: " + root.film_ratings
+        font_style: "H2"
+    MDLabel:
+        text: "Wikipedia: " + root.film_wikipedia
+        font_style: "H2"
+    MDBoxLayout:
+        MDLabel:
+        text: "Posters"
+        font_style: "H2"
+        ScrollView:
+            MDBoxLayout:
+                id: posters_list
+    MDBoxLayout:
+        MDLabel:
+        text: "Images"
+        font_style: "H2"
+        ScrollView:
+            MDBoxLayout:
+                id: images_list
+
+
+<ActorListItem>:
+        radius: 24
+        box_radius: [0, 0, 24, 24]
+        box_color: 1, 1, 1, .2
+        source: self.photo
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: None, None
+        size: "320dp", "320dp"
+
+        MDLabel:
+            text: self.name_and_role
+            bold: True
+            color: 1, 1, 1, 1
+
+<PosterImageListItem>:
+        radius: 24
+        box_radius: [0, 0, 24, 24]
+        box_color: 1, 1, 1, .2
+        source: self.photo
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: None, None
+        size: "320dp", "320dp"
+
+<MovieItem>:
+    size_hint_y: None
+    height: "500dp"
+    radius: 24
+
+    MDSmartTile:
+        id: tile
+        radius: 24
+        box_radius: 0, 0, 24, 24
+        box_color: 0, 0, 0, .5
+        source: root.film_poster
+        #size_hint: None, None
+        #size: root.size
+        mipmap: True
+        on_release: root.on_release()
+
+        MDLabel:
+            text: root.film_title
+            bold: True
+            font_style: "H6"
+            opposite_colors: True
+
+#<LoadMoreGreatestFilms>:
+ #   id: load_more_gf_button
+  #  text : 'Load More'
+   # icon : "arrow-down-thick"
+    #pos_hint : {"center_x":.,"center_y":.}
+    #theme_text_color : "Custom"
+    #text_color :
+    #md_bg_color :
+    #font_size : 30
+    #size_hint : None,None
+    #size : 280,35
+    #on_press : app.add_greatest_films()
+
+#<LoadMoreFoundFilms>:
+ #   id: load_more_ff_button
+  #  text : 'Load More'
+   # icon : "arrow-down-thick"
+    #pos_hint : {"center_x":.,"center_y":.}
+    #theme_text_color : "Custom"
+    #text_color :
+    #md_bg_color :
+    #font_size : 30
+    #size_hint : None,None
+    #size : 280,35
+    #on_press : app.add_searched_films()
+
+MDBoxLayout:
+    orientation: 'vertical'
+
+    MDBottomNavigation:
+        panel_color: get_color_from_hex("#ffff00")
+        selected_color_background: get_color_from_hex("#008000")
+        text_color_active: 0, 0, 0, 1
+
+        MDBottomNavigationItem:
+            name: 'screen 1'
+            text: 'Movie'
+            icon: 'magnify'
+            id: FindingBNI
+            md_bg_color: get_color_from_hex("#008000")
+
+            MDScreenManager:
+                id:sm_for_finding
+                MDScreen:
+                    md_bg_color: get_color_from_hex("#008000")
+                    MDIconButton:
+                        icon: 'movie-open'
+                        icon_size: "248sp"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        theme_icon_color: "Custom"
+                        icon_color: get_color_from_hex("#ff8000")
+                        on_release: app.open_camera()
+
+        MDBottomNavigationItem:
+            orientation: 'vertical'
+            name: 'screen 2'
+            text: 'News'
+            icon: 'newspaper'
+            id: NewsBNI
+            md_bg_color: get_color_from_hex("#008000")
+
+            MDCarousel:
+                id: news_carousel
+
+        MDBottomNavigationItem:
+            name: 'screen 3'
+            text: 'Info'
+            icon: 'information'
+            id: InfoBNI
+            md_bg_color: get_color_from_hex("#008000")
+
+            MDScreenManager:
+
+                MDScreen:
+                    name: "Movie list"
+
+                    MDTextField:
+                        id: search_field
+                        hint_text: 'Search film'
+                        pos_hint : {"center_x":.5,"center_y":.93}
+                        on_text: app.logic_for_adding_films(self.text, True)
+
+                    ScrollView:
+
+                        MDGridLayout:
+                            id: box
+                            cols: 2
+                            spacing: "12dp"
+                            padding: "12dp"
+                            adaptive_height: True
+
+                MDScreen:
+                    name: "Movie info"
+                    hero_to: hero_to
+
+                    MDHeroTo:
+                        id: hero_to
+                        size_hint: 1, None
+                        height: "220dp"
+                        pos_hint: {"top": 1}
+
+                    MDRaisedButton:
+                        text: "Move Hero To Screen A"
+                        pos_hint: {"center_x": .5}
+                        y: "36dp"
+                        on_release:
+                            root.current_hero = "hero"
+                            root.current = "Movie list"
